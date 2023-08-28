@@ -5,7 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <h5 class="card-header">ID: {{ $post->id }} SLUG: {{ $post->slug }}</h5>
+                <h5 class="card-header">ID: {{ $post->id }} SLUG: {{ $post->slug }} -- {{ $post->type->name }}</h5>
+
 
                 @if (str_starts_with( $post->image, 'http' ) )
                     <img src="{{ $post->image }}" alt="{{ $post->title }}"> 
