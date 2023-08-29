@@ -28,8 +28,8 @@ class PostController extends Controller
     public function create()
     {
         //
-
-        return view ('admin.posts.create');
+        $types = Type::all();
+        return view ('admin.posts.create', compact('types'));
     }
 
     /**
@@ -43,6 +43,7 @@ class PostController extends Controller
             'title' => ['required', 'unique:posts', 'min:10', 'max:255'],
             'image' => ['file'],
             'content' => ['required', 'min:10'],
+            'type_id' => ['required', 'exists:types,id']
         ]);
         $img_path = Storage::put('uploads', $request['image']);
 
@@ -70,7 +71,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
-        return view('admin.posts.edit', compact('post'));
+        $types = Type::all();
+        return view('admin.posts.edit', compact('post', 'types'));
     }
 
     /**
@@ -83,6 +85,7 @@ class PostController extends Controller
             'title' => ['required', 'min:2', Rule::unique('posts')->ignore($post->id), 'max:255'],
             'image' => ['url:https'],
             'content' => ['required', 'min:10'],
+            'type_id' => ['required', 'exists:types,id']
         ]);
 
         $data["slug"] = Str::of($data['title'])->slug('-');

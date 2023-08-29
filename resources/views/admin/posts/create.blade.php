@@ -8,12 +8,27 @@
            <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
+
                 @error('title')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Insert post title" name="title" value="{{ old('title', '') }}">
+                </div>
+
+                @error('type_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <div class="mb-3">
+                    <label for="type_id" class="form-label">Type</label>
+                    <select class="form-select" name="type_id" id="type">
+                        @foreach ($types as $type)
+                        <option value="{{ $type->id }}">
+                            {{ $type->name }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 @error('image')
